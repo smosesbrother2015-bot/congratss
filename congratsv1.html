@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0b1020" />
+<title>🎉 Congrats, Risma!</title>
+<meta name="description" content="A sweet, mobile-first mini-site to celebrate passing the nursing UKOM." />
+<meta property="og:title" content="She did it! 🎉" />
+<meta property="og:description" content="Celebrating a nurse who crushed the UKOM." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="" />
+<style>
+:root{
+    --bg: #0b1020;
+    --panel: #121833;
+    --ink: #e7ecff;
+    --muted: #9fb0ff;
+    --accent: #7c9bff;
+    --hot: #ff5d9e;
+    --ok: #36d399;
+    --warn: #ffd166;
+    --shadow: 0 10px 30px rgba(0,0,0,.35);
+    --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+        margin:0; background: linear-gradient(180deg,#1a2250 0%,#0b1020 50%,#050914 100% );
+        color:var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+        -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    .wrap{max-width:720px; margin:0 auto; padding:18px 16px 60px;}
+
+    header{display:flex; align-items:center; gap:12px; padding:8px 10px; background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); box-shadow:var(--shadow)}
+    .badge{display:flex; align-items:center; justify-content:center; width:48px; height:48px; border-radius:14px; background:linear-gradient(145deg, #2a3470, #12183a); border:1px solid rgba(255,255,255,.1)}
+    .badge svg{width:28px; height:28px}
+    .title{line-height:1.1}
+    h1{margin:0; font-size:clamp(26px, 6vw, 38px); font-weight:800; letter-spacing:-.02em;}
+    .gradient{background:linear-gradient(90deg, #7c9bff 0%, #a777ff 45%, #ff5d9e 90%); -webkit-background-clip:text; background-clip:text; color:transparent}
+    .sub{margin:4px 0 0; color:var(--muted); font-size:clamp(13px, 3.6vw, 15px)}
+
+    .hero{position:relative; margin:14px 0 20px; padding:18px; border-radius:var(--radius); background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); overflow:hidden; box-shadow:var(--shadow)}
+    .hero .big{font-size:clamp(30px, 10vw, 52px); font-weight:900; letter-spacing:-.02em; margin:6px 0}
+    .hero .msg{color:#d6ddff; opacity:.9; margin:0 0 10px; font-size:clamp(14px, 4vw, 16px)}
+    .cta{display:flex; gap:10px}
+    .btn{appearance:none; border:0; cursor:pointer; padding:12px 16px; border-radius:14px; background:linear-gradient(145deg, #ff6fb3, #ff3d86); color:white; font-weight:700; box-shadow:0 6px 20px rgba(255,93,158,.36);}
+    .btn.secondary{background:linear-gradient(145deg, #4f6dff, #7c9bff); box-shadow:0 6px 20px rgba(124,155,255,.36)}
+    .meta{margin-left:auto; color:#c7d2fe; opacity:.8; font-size:12px}
+
+    .timeline{margin:22px 0 0; display:grid; gap:14px}
+    .card{position:relative; padding:14px 14px 14px 56px; background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); border-radius:16px; box-shadow:var(--shadow)}
+    .dot{position:absolute; left:16px; top:18px; width:28px; height:28px; border-radius:12px; display:grid; place-items:center; background:#1b2350; border:1px solid rgba(255,255,255,.12)}
+    .dot span{font-size:16px}
+    .card h3{margin:2px 0 4px; font-size:16px}
+    .card .desc{margin:0; color:#c9d2ff; font-size:14px; line-height:1.5}
+    .card .date{margin-top:6px; font-size:12px; color:#9fb0ff}
+
+    .line{position:absolute; left:29px; top:40px; bottom:-10px; width:2px; background:linear-gradient(180deg, rgba(124,155,255,.6), rgba(255,93,158,.2)); pointer-events:none}
+    .card:last-child .line{display:none}
+
+    .footer{margin-top:26px; text-align:center; color:#b7c2ff; font-size:13px}
+
+    /* Confetti canvas */
+    #fx{position:fixed; inset:0; pointer-events:none; z-index: 9999;}
+
+    /* Tiny motion */
+    .pop{transform:translateY(4px); opacity:0; animation:pop .5s ease-out forwards}
+    @keyframes pop{to{transform:translateY(0); opacity:1}}
+    .pulse{animation:pulse 1.6s ease-in-out infinite}
+    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+
+    /* Safe area for notches */
+    .wrap{padding-bottom:calc(22px + env(safe-area-inset-bottom))}
+
+    /* Install button (PWA hint) */
+    .install{position:fixed; left:50%; transform:translateX(-50%); bottom:12px; background:#10173a; color:#e7ecff; border:1px solid rgba(255,255,255,.1); border-radius:999px; padding:10px 14px; font-size:13px; display:none; gap:8px; align-items:center; box-shadow:var(--shadow)}
+</style>
+</head>
+<body>
+    <canvas id="fx"></canvas>
+    <div class="wrap">
+    <header class="pop">
+        <div class="title">
+            <h1>Congrats, <span id="who">Name</span>! 🎉</h1>
+            <p class="sub">You passed the Nursing UKOM — so proud of you 🩺</p>
+        </div>
+    </header>
+
+    <section class="hero pop" style="animation-delay:.06s">
+        <div style="display: flex; justify-content: center; margin-bottom: 14px;">
+            <img src="./resources/asdasd.jpg" alt="try" style="width: 300px; height: 300px; border-radius: 50%;
+            object-fit: cover; border: 10px solid var(--accent); box-shadow: var(--shadow);">
+        </div>
+        <div class="big">You did it! 💖</div>
+        <p class="msg">From late-night study sessions to clinical hours and nerves on exam day — you kept going. This page is your little victory corner.</p>
+        <div class="cta">
+        <button class="btn" id="celebrate">Confetti 🎉</button>
+        <button class="btn secondary" id="share">Share</button>
+    </div>
+    </section>
+
+    <section class="pop" style="animation-delay:.1s">
+        <h2 style="margin:0 0 10px; font-size:18px; font-weight:800; letter-spacing:-.01em">Milestones & Moments</h2>
+        <div id="timeline" class="timeline"></div>
+    </section>
+
+    <p class="footer pop" style="animation-delay:.14s">Made with 💙 by <span id="from">you</span> Proud of you, <span id="who2">Name</span> — always.</p>
+</div>
+
+<button class="install" id="installBtn">➕ Add to Home Screen</button>
+
+<script>
+    // ====== Editable Data ======
+    const DATA = {
+        name: "Rismaa",          
+        from: "Yours Truly :)",           
+        examLabel: "UKOM",
+        year: new Date().getFullYear(),
+        milestones: [
+        { icon: "📚", title: "Last Day Magang", date: "May 2025", desc: "Shift2 ekstrim, tapi gpp dikasih risoles" },
+        { icon: "🩺", title: "OSCEE + Sidang", date: "June 2025", desc: "Ujiann muluu wkwk" },
+        { icon: "💻", title: "Study grind mode", date: "July 2025", desc: "Try out, zoom, youtube, belajar bareng" },
+        { icon: "⏰", title: "Countdown to UKOM", date: "Aug 1-8, 2025", desc: "Sempet Ga Nafsu Makan Nasi Goreng Gais wkwk" },
+        { icon: "📝", title: "UKOM Day", date: "Aug 9, 2025", desc: "Datang, Kerjakan, Lalapan" },
+        { icon: "🎉", title: "PASSED!", date: "Sep 1, 2025", desc: "You deserved it, Semoga segera jadi nggunung dan resmi perawat rs-nya! Aamiin" },
+    ],
+    };
+
+    // ====== Bind header ======
+    const who = document.getElementById('who');
+    const who2 = document.getElementById('who2');
+    const from = document.getElementById('from');
+
+    who.textContent = DATA.name;
+    who2.textContent = DATA.name;
+    from.textContent = DATA.from;
+
+    // ====== Render timeline ======
+    const timeline = document.getElementById('timeline');
+    timeline.innerHTML = DATA.milestones.map((m, i) => `
+      <article class="card" style="animation-delay:${i * 0.03 + .05}s">
+        <div class="dot"><span>${m.icon}</span></div>
+        ${i < DATA.milestones.length - 1 ? '<i class="line"></i>' : ''}
+        <h3>${m.title}</h3>
+        <p class="desc">${m.desc}</p>
+        <div class="date">${m.date}</div>
+        </article>
+    `).join('');
+
+    // Reveal on scroll (simple)
+    const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('pop'); io.unobserve(e.target); } });
+    }, { threshold:.2 });
+    document.querySelectorAll('.card').forEach(el=> io.observe(el));
+
+    // ====== Confetti ======
+    const canvas = document.getElementById('fx');
+    const ctx = canvas.getContext('2d');
+    let W, H, bits = [], running = false;
+    const colors = ['#7c9bff','#a777ff','#ff5d9e','#36d399','#ffd166'];
+
+    function resize(){ W = canvas.width = innerWidth * devicePixelRatio; H = canvas.height = innerHeight * devicePixelRatio; }
+    addEventListener('resize', resize, {passive:true}); resize();
+
+    function spawn(n=140){
+        for(let i=0;i<n;i++){
+            bits.push({
+                x: Math.random()*W, y: -20*devicePixelRatio,
+                vx: (Math.random()-.5)*3*devicePixelRatio,
+                vy: (2+Math.random()*3)*devicePixelRatio,
+                s: (6+Math.random()*10)*devicePixelRatio,
+                r: Math.random()*Math.PI,
+                vr: (Math.random()-.5)*0.2,
+                c: colors[(Math.random()*colors.length)|0]
+            })
+        }
+    }
+
+    function step(){
+        if(!running && bits.length===0) return; 
+        running = true;
+        ctx.clearRect(0,0,W,H);
+        for(let i=bits.length-1;i>=0;i--){
+            const b = bits[i];
+            b.x += b.vx; b.y += b.vy; b.r += b.vr; b.vy += .05*devicePixelRatio;
+            // draw
+            ctx.save(); ctx.translate(b.x,b.y); ctx.rotate(b.r);
+            ctx.fillStyle = b.c; ctx.fillRect(-b.s*.5,-b.s*.25,b.s,b.s*.5);
+            ctx.restore();
+            // cull
+            if(b.y > H + 40*devicePixelRatio) bits.splice(i,1);
+        }
+        requestAnimationFrame(step);
+        if(bits.length===0) running=false;
+    }
+
+    document.getElementById('celebrate').addEventListener('click', ()=>{ spawn(); step(); navigator.vibrate?.(40); });
+
+    // Auto confetti on first visit
+    window.addEventListener('load', ()=> setTimeout(()=>{ spawn(200); step(); }, 500));
+
+    // ====== Web Share API ======
+    const shareBtn = document.getElementById('share');
+    shareBtn.addEventListener('click', async ()=>{
+        const text = `So proud of you, ${DATA.name}! You passed ${DATA.examLabel} \uD83C\uDF89`;
+        try{
+            if(navigator.share){
+                await navigator.share({title:`${DATA.name} passed!`, text, url: location.href});
+            }else{
+                await navigator.clipboard.writeText(text + "\n" + location.href);
+                shareBtn.textContent = 'Copied link!'; setTimeout(()=>shareBtn.textContent='Share', 1500);
+            }
+        }catch(e){ /* dismissed */ }
+    });
+
+    // ====== PWA-ish: prompt to Add to Home Screen ======
+    let deferredPrompt; const a2hs = document.getElementById('installBtn');
+    window.addEventListener('beforeinstallprompt', (e)=>{ e.preventDefault(); deferredPrompt = e; a2hs.style.display='flex'; });
+    a2hs.addEventListener('click', async ()=>{ if(!deferredPrompt) return; deferredPrompt.prompt(); const { outcome } = await deferredPrompt.userChoice; if(outcome){ a2hs.style.display='none'; } });
+    </script>
+</body>
+</html>
