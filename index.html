@@ -22,59 +22,114 @@
     --warn: #ffd166;
     --shadow: 0 10px 30px rgba(0,0,0,.35);
     --radius: 18px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-        margin:0; background: linear-gradient(180deg,#1a2250 0%,#0b1020 50%,#050914 100% );
-        color:var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-        -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-    }
-    .wrap{max-width:720px; margin:0 auto; padding:18px 16px 60px;}
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+    margin:0; background: linear-gradient(180deg,#1a2250 0%,#0b1020 50%,#050914 100% );
+    color:var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+}
+.wrap{max-width:720px; margin:0 auto; padding:18px 16px 60px;}
 
-    header{display:flex; align-items:center; gap:12px; padding:8px 10px; background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); box-shadow:var(--shadow)}
-    .badge{display:flex; align-items:center; justify-content:center; width:48px; height:48px; border-radius:14px; background:linear-gradient(145deg, #2a3470, #12183a); border:1px solid rgba(255,255,255,.1)}
-    .badge svg{width:28px; height:28px}
-    .title{line-height:1.1}
-    h1{margin:0; font-size:clamp(26px, 6vw, 38px); font-weight:800; letter-spacing:-.02em;}
-    .gradient{background:linear-gradient(90deg, #7c9bff 0%, #a777ff 45%, #ff5d9e 90%); -webkit-background-clip:text; background-clip:text; color:transparent}
-    .sub{margin:4px 0 0; color:var(--muted); font-size:clamp(13px, 3.6vw, 15px)}
+header{display:flex; align-items:center; gap:12px; padding:8px 10px; background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); box-shadow:var(--shadow)}
+.badge{display:flex; align-items:center; justify-content:center; width:48px; height:48px; border-radius:14px; background:linear-gradient(145deg, #2a3470, #12183a); border:1px solid rgba(255,255,255,.1)}
+.badge svg{width:28px; height:28px}
+.title{line-height:1.1}
+h1{margin:0; font-size:clamp(26px, 6vw, 38px); font-weight:800; letter-spacing:-.02em;}
+.gradient{background:linear-gradient(90deg, #7c9bff 0%, #a777ff 45%, #ff5d9e 90%); -webkit-background-clip:text; background-clip:text; color:transparent}
+.sub{margin:4px 0 0; color:var(--muted); font-size:clamp(13px, 3.6vw, 15px)}
 
-    .hero{position:relative; margin:14px 0 20px; padding:18px; border-radius:var(--radius); background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); overflow:hidden; box-shadow:var(--shadow)}
-    .hero .big{font-size:clamp(30px, 10vw, 52px); font-weight:900; letter-spacing:-.02em; margin:6px 0}
-    .hero .msg{color:#d6ddff; opacity:.9; margin:0 0 10px; font-size:clamp(14px, 4vw, 16px)}
-    .cta{display:flex; gap:10px}
-    .btn{appearance:none; border:0; cursor:pointer; padding:12px 16px; border-radius:14px; background:linear-gradient(145deg, #ff6fb3, #ff3d86); color:white; font-weight:700; box-shadow:0 6px 20px rgba(255,93,158,.36);}
-    .btn.secondary{background:linear-gradient(145deg, #4f6dff, #7c9bff); box-shadow:0 6px 20px rgba(124,155,255,.36)}
-    .meta{margin-left:auto; color:#c7d2fe; opacity:.8; font-size:12px}
+.hero{position:relative; margin:14px 0 20px; padding:18px; border-radius:var(--radius); background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); overflow:hidden; box-shadow:var(--shadow)}
+.hero .big{font-size:clamp(30px, 10vw, 52px); font-weight:900; letter-spacing:-.02em; margin:6px 0}
+.hero .msg{color:#d6ddff; opacity:.9; margin:0 0 10px; font-size:clamp(14px, 4vw, 16px)}
+.cta{display:flex; gap:10px}
+.btn{appearance:none; border:0; cursor:pointer; padding:12px 16px; border-radius:14px; background:linear-gradient(145deg, #ff6fb3, #ff3d86); color:white; font-weight:700; box-shadow:0 6px 20px rgba(255,93,158,.36);}
+.btn.secondary{background:linear-gradient(145deg, #4f6dff, #7c9bff); box-shadow:0 6px 20px rgba(124,155,255,.36)}
+.meta{margin-left:auto; color:#c7d2fe; opacity:.8; font-size:12px}
 
-    .timeline{margin:22px 0 0; display:grid; gap:14px}
-    .card{position:relative; padding:14px 14px 14px 56px; background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); border-radius:16px; box-shadow:var(--shadow)}
-    .dot{position:absolute; left:16px; top:18px; width:28px; height:28px; border-radius:12px; display:grid; place-items:center; background:#1b2350; border:1px solid rgba(255,255,255,.12)}
-    .dot span{font-size:16px}
-    .card h3{margin:2px 0 4px; font-size:16px}
-    .card .desc{margin:0; color:#c9d2ff; font-size:14px; line-height:1.5}
-    .card .date{margin-top:6px; font-size:12px; color:#9fb0ff}
+.timeline{margin:22px 0 0; display:grid; gap:14px}
+.card{position:relative; padding:14px 14px 14px 56px; background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); border-radius:16px; box-shadow:var(--shadow)}
+.dot{position:absolute; left:16px; top:18px; width:28px; height:28px; border-radius:12px; display:grid; place-items:center; background:#1b2350; border:1px solid rgba(255,255,255,.12)}
+.dot span{font-size:16px}
+.card h3{margin:2px 0 4px; font-size:16px}
+.card .desc{margin:0; color:#c9d2ff; font-size:14px; line-height:1.5}
+.card .date{margin-top:6px; font-size:12px; color:#9fb0ff}
 
-    .line{position:absolute; left:29px; top:40px; bottom:-10px; width:2px; background:linear-gradient(180deg, rgba(124,155,255,.6), rgba(255,93,158,.2)); pointer-events:none}
-    .card:last-child .line{display:none}
+.line{position:absolute; left:29px; top:40px; bottom:-10px; width:2px; background:linear-gradient(180deg, rgba(124,155,255,.6), rgba(255,93,158,.2)); pointer-events:none}
+.card:last-child .line{display:none}
 
-    .footer{margin-top:26px; text-align:center; color:#b7c2ff; font-size:13px}
+/* Quote between milestones and gallery */
+.quote{
+    margin:20px 0 12px; padding:14px 16px;
+    border-radius:16px;
+    background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:var(--shadow);
+    color:#dce3ff; font-size:14px; line-height:1.6;
+}
+.quote q{quotes:"“" "”" "‘" "’";}
+.quote q::before{content:open-quote}
+.quote q::after{content:close-quote}
+.quote .by{display:block; margin-top:6px; color:#9fb0ff; font-size:12px}
 
-    /* Confetti canvas */
-    #fx{position:fixed; inset:0; pointer-events:none; z-index: 9999;}
+/* Gallery / Carousel */
+.gallery{margin:16px 0 0}
+.gallery h2{margin:0 0 10px; font-size:18px; font-weight:800; letter-spacing:-.01em}
+.carousel{
+    position:relative; border-radius:16px; overflow:hidden;
+    background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.08); box-shadow:var(--shadow);
+}
+.track{
+    display:flex; width:100%; touch-action:pan-y;
+    transition:transform .35s ease;
+}
+.slide{
+    min-width:100%; padding:12px; display:flex; flex-direction:column; gap:10px;
+}
+.photo-wrap{
+    position:relative; width:100%;
+    aspect-ratio: 4/5; /* tall for phones; adjust as needed */
+    border-radius:14px; overflow:hidden;
+    background:#0f1533;
+    border:1px solid rgba(255,255,255,.08);
+}
+.photo-wrap img{
+    width:100%; height:100%; object-fit:cover; display:block;
+}
+.caption{
+    margin:0; color:white; font-size:16px; line-height:1.6;
+    font-weight: 500;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.06);
+    padding:10px 12px; border-radius:12px;
+}
 
-    /* Tiny motion */
-    .pop{transform:translateY(4px); opacity:0; animation:pop .5s ease-out forwards}
-    @keyframes pop{to{transform:translateY(0); opacity:1}}
-    .pulse{animation:pulse 1.6s ease-in-out infinite}
-    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+/* Dots */
+.dots{display:flex; gap:6px; justify-content:center; padding:10px}
+.dotbtn{
+    width:6px; height:6px; border-radius:999px; border:0; background:#5f6bd1; opacity:.5
+}
+.dotbtn[aria-current="true"]{opacity:1; width:18px; border-radius:999px}
 
-    /* Safe area for notches */
-    .wrap{padding-bottom:calc(22px + env(safe-area-inset-bottom))}
+/* Footer & extras */
+.footer{margin-top:26px; text-align:center; color:#b7c2ff; font-size:13px}
 
-    /* Install button (PWA hint) */
-    .install{position:fixed; left:50%; transform:translateX(-50%); bottom:12px; background:#10173a; color:#e7ecff; border:1px solid rgba(255,255,255,.1); border-radius:999px; padding:10px 14px; font-size:13px; display:none; gap:8px; align-items:center; box-shadow:var(--shadow)}
+/* Confetti canvas */
+#fx{position:fixed; inset:0; pointer-events:none; z-index: 9999;}
+
+/* Tiny motion */
+.pop{transform:translateY(4px); opacity:0; animation:pop .5s ease-out forwards}
+@keyframes pop{to{transform:translateY(0); opacity:1}}
+.pulse{animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+
+/* Safe area for notches */
+.wrap{padding-bottom:calc(22px + env(safe-area-inset-bottom))}
+
+/* Install button (PWA hint) */
+.install{position:fixed; left:50%; transform:translateX(-50%); bottom:12px; background:#10173a; color:#e7ecff; border:1px solid rgba(255,255,255,.1); border-radius:999px; padding:10px 14px; font-size:13px; display:none; gap:8px; align-items:center; box-shadow:var(--shadow)}
 </style>
 </head>
 <body>
@@ -102,10 +157,26 @@
 
     <section class="pop" style="animation-delay:.1s">
         <h2 style="margin:0 0 10px; font-size:18px; font-weight:800; letter-spacing:-.01em">Milestones & Moments</h2>
+        <p>A gentle reminder of what you’ve been through</p>
         <div id="timeline" class="timeline"></div>
     </section>
 
-    <p class="footer pop" style="animation-delay:.14s">Made with 💙 by <span id="from">you</span> Proud of you, <span id="who2">Name</span> — always.</p>
+    <!-- NEW: quote that transitions to gallery -->
+    <section class="quote pop" style="animation-delay:.12s">
+        <h4>Jangan lupa apresiasi diri sendiri yaa, kamu fokus sama tujuanmu, and I’ll always be here to support whatever path you choose at every milestone, whether it’s up or down</h4>
+        <span class="by">— from <span id="from2">you</span></span>
+    </section>
+
+    <!-- NEW: Gallery with swipe + buttons -->
+    <section class="gallery pop" style="animation-delay:.14s" aria-label="Photo gallery with messages">
+        <h2>Message From your Loved Ones~</h2>
+        <div class="carousel" id="carousel" role="region" aria-roledescription="carousel" aria-label="Risma gallery">
+            <div class="track" id="track"></div>
+        </div>
+        <div class="dots" id="dots" role="tablist" aria-label="Slides"></div>
+    </section>
+
+    <p class="footer pop" style="animation-delay:.18s">Made with 💙 by <span id="from">you</span> Proud of you, <span id="who2">Name</span> — always.</p>
 </div>
 
 <button class="install" id="installBtn">➕ Add to Home Screen</button>
@@ -113,28 +184,36 @@
 <script>
     // ====== Editable Data ======
     const DATA = {
-        name: "Rismaa",          
-        from: "Yours Truly :)",           
+        name: "Rismaa",
+        from: "Dito.",
         examLabel: "UKOM",
         year: new Date().getFullYear(),
         milestones: [
-        { icon: "📚", title: "Last Day Magang", date: "May 2025", desc: "Shift2 ekstrim, tapi gpp dikasih risoles" },
-        { icon: "🩺", title: "OSCEE + Sidang", date: "June 2025", desc: "Ujiann muluu wkwk" },
-        { icon: "💻", title: "Study grind mode", date: "July 2025", desc: "Try out, zoom, youtube, belajar bareng" },
-        { icon: "⏰", title: "Countdown to UKOM", date: "Aug 1-8, 2025", desc: "Sempet Ga Nafsu Makan Nasi Goreng Gais wkwk" },
-        { icon: "📝", title: "UKOM Day", date: "Aug 9, 2025", desc: "Datang, Kerjakan, Lalapan" },
-        { icon: "🎉", title: "PASSED!", date: "Sep 1, 2025", desc: "You deserved it, Semoga segera jadi nggunung dan resmi perawat rs-nya! Aamiin" },
-    ],
+            { icon: "📚", title: "Last Day Magang", date: "May 2025", desc: "Shift2 ekstrim, tapi gpp dikasih risoles" },
+            { icon: "🩺", title: "OSCEE + Sidang", date: "June 2025", desc: "Ujiann muluu wkwk" },
+            { icon: "💻", title: "Study grind mode", date: "July 2025", desc: "Try out, zoom, youtube, belajar bareng" },
+            { icon: "⏰", title: "Countdown to UKOM", date: "Aug 1-8, 2025", desc: "Sempet Ga Nafsu Makan Nasi Goreng Gais wkwk" },
+            { icon: "📝", title: "UKOM Day", date: "Aug 9, 2025", desc: "Datang, Kerjakan, Lalapan" },
+            { icon: "🎉", title: "PASSED!", date: "Sep 1, 2025", desc: "You deserved it, Semoga segera jadi nggunung dan resmi perawat rs-nya! Aamiin" },
+        ],
+        // NEW: gallery items (replace src with your images)
+        gallery: [
+            { src: "./resources/tes.jpg", alt: "Risma with friends 1", msg: "Ini fotonya aga bikin emosi somehow" },
+            { src: "./resources/tes (2).jpg", alt: "Risma with friends 2", msg: "wkwkwk yg ini lucu si" },
+            { src: "./resources/IMG-20250721-WA0021.jpg", alt: "Risma with friends 3", msg: "ini contoh klo bareng temen" }
+        ]
     };
 
     // ====== Bind header ======
     const who = document.getElementById('who');
     const who2 = document.getElementById('who2');
     const from = document.getElementById('from');
+    const from2 = document.getElementById('from2');
 
     who.textContent = DATA.name;
     who2.textContent = DATA.name;
     from.textContent = DATA.from;
+    from2.textContent = DATA.from;
 
     // ====== Render timeline ======
     const timeline = document.getElementById('timeline');
@@ -153,6 +232,74 @@
         entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('pop'); io.unobserve(e.target); } });
     }, { threshold:.2 });
     document.querySelectorAll('.card').forEach(el=> io.observe(el));
+
+    // ====== NEW: Gallery rendering ======
+    const track = document.getElementById('track');
+    const dotsWrap = document.getElementById('dots');
+    let index = 0, startX = 0, currentX = 0, dragging = false, trackW = 0;
+
+    function renderSlides(){
+        track.innerHTML = DATA.gallery.map(g => `
+        <div class="slide" role="group" aria-roledescription="slide">
+            <div class="photo-wrap">
+                <img src="${g.src}" alt="${g.alt || ''}">
+                </div>
+            <p class="caption">${g.msg}</p>
+        </div>`).join('');
+        dotsWrap.innerHTML = DATA.gallery.map((_,i)=>`
+        <button class="dotbtn" role="tab" aria-label="Go to slide ${i+1}" ${i===0?'aria-current="true"':''}></button>`).join('');
+        trackW = track.getBoundingClientRect().width;
+        goTo(0, false);
+    }
+
+    function goTo(i, animate=true){
+        index = Math.max(0, Math.min(i, DATA.gallery.length - 1));
+        track.style.transition = animate ? 'transform .35s ease' : 'none';
+        track.style.transform = `translateX(${-index * 100}%)`;
+      // dots
+        dotsWrap.querySelectorAll('.dotbtn').forEach((d,di)=> d.setAttribute('aria-current', di===index ? 'true':'false'));
+      // update aria-live?
+    }
+
+    // Dots
+    dotsWrap.addEventListener('click', (e)=>{
+        if(e.target.matches('.dotbtn')){
+        const nodes = Array.from(dotsWrap.children);
+        goTo(nodes.indexOf(e.target));
+        }
+    });
+
+    // Touch swipe (horizontal, allow vertical scroll)
+    const carousel = document.getElementById('carousel');
+    const threshold = 40; // px
+
+    carousel.addEventListener('touchstart', (e)=>{
+        if(e.touches.length !== 1) return;
+        dragging = true; startX = e.touches[0].clientX; currentX = startX;
+        track.style.transition = 'none';
+    }, {passive:true});
+
+    carousel.addEventListener('touchmove', (e)=>{
+        if(!dragging) return;
+        currentX = e.touches[0].clientX;
+        const dx = currentX - startX;
+        const pct = (dx / carousel.clientWidth) * 100;
+        track.style.transform = `translateX(${-(index*100) + pct}%)`;
+    }, {passive:true});
+
+    carousel.addEventListener('touchend', ()=>{
+        if(!dragging) return; dragging = false;
+        const dx = currentX - startX;
+        if(Math.abs(dx) > threshold){
+            if(dx < 0) goTo(index + 1); else goTo(index - 1);
+        }else{
+            goTo(index); // snap back
+            }
+    }, {passive:true});
+
+    // Initialize gallery
+    renderSlides();
+    addEventListener('resize', ()=> { trackW = track.getBoundingClientRect().width; goTo(index,false); }, {passive:true});
 
     // ====== Confetti ======
     const canvas = document.getElementById('fx');
@@ -178,17 +325,15 @@
     }
 
     function step(){
-        if(!running && bits.length===0) return; 
+        if(!running && bits.length===0) return;
         running = true;
         ctx.clearRect(0,0,W,H);
         for(let i=bits.length-1;i>=0;i--){
             const b = bits[i];
             b.x += b.vx; b.y += b.vy; b.r += b.vr; b.vy += .05*devicePixelRatio;
-            // draw
             ctx.save(); ctx.translate(b.x,b.y); ctx.rotate(b.r);
             ctx.fillStyle = b.c; ctx.fillRect(-b.s*.5,-b.s*.25,b.s,b.s*.5);
             ctx.restore();
-            // cull
             if(b.y > H + 40*devicePixelRatio) bits.splice(i,1);
         }
         requestAnimationFrame(step);
@@ -218,6 +363,6 @@
     let deferredPrompt; const a2hs = document.getElementById('installBtn');
     window.addEventListener('beforeinstallprompt', (e)=>{ e.preventDefault(); deferredPrompt = e; a2hs.style.display='flex'; });
     a2hs.addEventListener('click', async ()=>{ if(!deferredPrompt) return; deferredPrompt.prompt(); const { outcome } = await deferredPrompt.userChoice; if(outcome){ a2hs.style.display='none'; } });
-    </script>
+</script>
 </body>
 </html>
