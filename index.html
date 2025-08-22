@@ -913,6 +913,33 @@ oiyee tolong nitip rawat moon baek yee lol, pastiin dia selamet, biar bisa lanju
     // ====== Web Share API ======
     const shareBtn = document.getElementById('share');
 
+    const LOVE_NOTES = [
+        "Proud of you — always 💙",
+        "Keep shining, nurse superstar ✨",
+        "One step closer to your dreams 🩺",
+        "You did it, and I'm so happy for you 💖",
+        "Semangat terus! Aku selalu dukung kamu 💪"
+    ];
+
+    // Quick floating hearts + haptic
+    function floatHearts(n=10){
+        const wrap = document.getElementById('float-hearts');
+        const emojis = ["💙","💖","💫","🩵","✨","💐"];
+        for(let i=0;i<n;i++){
+            const el = document.createElement('span');
+            el.className = 'heart-float';
+            el.textContent = emojis[(Math.random()*emojis.length)|0];
+            const x = 20 + Math.random()*60; // % horizontally
+            const delay = Math.random()*0.3;
+            el.style.left = x + 'vw';
+            el.style.animationDelay = delay + 's';
+            el.style.opacity = '0';
+            wrap.appendChild(el);
+            setTimeout(()=> el.remove(), 2500);
+        }
+      navigator.vibrate?.([80, 120, 80]); // heartbeat-ish
+    }
+
     // Draw a rounded rectangle helper
     function roundRect(ctx, x, y, w, h, r){
         const radius = Math.min(r, w/2, h/2);
