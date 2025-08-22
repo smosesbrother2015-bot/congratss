@@ -635,6 +635,11 @@ h1{
             <div class="track" id="track"></div>
         </div>
         <div class="dots" id="dots" role="tablist" aria-label="Slides"></div>
+        <div style="text-align: center; margin-top: 20px;">
+            <button class="btn secondary" id="backToCelebration" style="background: var(--gradient-soft); border: 2px solid var(--secondary); color: var(--secondary);">
+                ← Back to Celebration
+            </button>
+        </div>
     </section>
 
     <!-- Added modal for full-screen image view -->
@@ -956,6 +961,76 @@ oiyee tolong nitip rawat moon baek yee lol, pastiin dia selamet, biar bisa lanju
         floatHearts();
         const current = (DATA.gallery && DATA.gallery[index]) || DATA.gallery?.[0] || null;
         const note = LOVE_NOTES[(Math.random()*LOVE_NOTES.length)|0];
+        const canvas = await createPostcardCanvas(current, note);
+        
+        canvas.toBlob(async (blob) => {
+            if (!blob) return;
+            const file = new File([blob], `for-${DATA.name}.jpg`, { type: 'image/jpeg' });
+            
+            // Show options modal
+            const optionsHtml = `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+                    <div style="background: white; padding: 24px; border-radius: 16px; text-align: center; max-width: 300px;">
+                        <h3 style="margin: 0 0 16px; color: var(--primary);">Share Your Postcard 💌</h3>
+                        <div style="display: flex; gap: 12px; justify-content: center;">
+                            <button id="shareOption" class="btn" style="flex: 1;">Share 📤</button>
+                            <button id="downloadOption" class="btn secondary" style="flex: 1;">Download 💾</button>
+                        </div>
+                        <button id="cancelOption" style="background: none; border: none; color: var(--muted); margin-top: 12px; cursor: pointer;">Cancel</button>
+                    </div>
+                </div>
+            `;
+            
+            const optionsModal = document.createElement('div');
+            optionsModal.innerHTML = optionsHtml;
+            document.body.appendChild(optionsModal);
+            
+            const shareOption = optionsModal.querySelector('#shareOption');
+            const downloadOption = optionsModal.querySelector('#downloadOption');
+            const cancelOption = optionsModal.querySelector('#cancelOption');
+            
+            shareOption.addEventListener('click', async () => {
+                try {
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        await navigator.share({
+                            files: [file],
+                            title: `For ${DATA.name} 💌`,
+                            text: note
+                        });
+                    } else {
+                        // Fallback to download if share not supported
+                        downloadPostcard(blob);
+                    }
+                } catch (e) {
+                    downloadPostcard(blob);
+                }
+                document.body.removeChild(optionsModal);
+            });
+            
+            downloadOption.addEventListener('click', () => {
+                downloadPostcard(blob);
+                document.body.removeChild(optionsModal);
+            });
+            
+            cancelOption.addEventListener('click', () => {
+                document.body.removeChild(optionsModal);
+            });
+        }, 'image/jpeg', 0.94);
+    }
+
+    function downloadPostcard(blob) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `for-${DATA.name}.jpg`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+    }
+
+    async function createPostcardCanvas(current, note) {
+        floatHearts();
         const date = new Date().toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' });
         const W = 1080, H = 1350; // 4:5 (Instagram-friendly too)
         const canvas = document.createElement('canvas');
@@ -1028,28 +1103,7 @@ oiyee tolong nitip rawat moon baek yee lol, pastiin dia selamet, biar bisa lanju
         ctx.fillStyle = '#64748b';
         ctx.fillText(footerText, W/2, H - pad - 16);
         
-        canvas.toBlob(async (blob)=>{
-            if(!blob) return;
-            const file = new File([blob], `for-${DATA.name}.jpg`, { type: 'image/jpeg' });
-            
-            try{
-                if(navigator.canShare && navigator.canShare({ files:[file] })){
-                    await navigator.share({
-                        files: [file],
-                        title: `For ${DATA.name} 💌`,
-                        text: note
-                    });
-                }else{
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url; a.download = `for-${DATA.name}.jpg`;
-                    document.body.appendChild(a); a.click(); a.remove();
-                    URL.revokeObjectURL(url);
-                }
-            }catch(e){
-
-            }
-        }, 'image/jpeg', 0.94);
+        return canvas;
     }
 
     shareBtn.addEventListener('click', ()=>{
@@ -1058,9 +1112,13 @@ oiyee tolong nitip rawat moon baek yee lol, pastiin dia selamet, biar bisa lanju
     });
 
     // ====== PWA-ish: prompt to Add to Home Screen ======
-    let deferredPrompt; const a2hs = document.getElementById('installBtn');
-    window.addEventListener('beforeinstallprompt', (e)=>{ e.preventDefault(); deferredPrompt = e; a2hs.style.display='flex'; });
-    a2hs.addEventListener('click', async ()=>{ if(!deferredPrompt) return; deferredPrompt.prompt(); const { outcome } = await deferredPrompt.userChoice; if(outcome){ a2hs.style.display='none'; } });
+    document.getElementById('backToCelebration').addEventListener('click', () => {
+        document.querySelector('section:has(#celebrate)').scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+        });
+    });
+
     const modal = document.getElementById('imageModal');
     const modalImage = document.getElementById('modalImage');
     const modalCaption = document.getElementById('modalCaption');
@@ -1093,6 +1151,10 @@ oiyee tolong nitip rawat moon baek yee lol, pastiin dia selamet, biar bisa lanju
             closeModal();
         }
     });
+
+    let deferredPrompt; const a2hs = document.getElementById('installBtn');
+    window.addEventListener('beforeinstallprompt', (e)=>{ e.preventDefault(); deferredPrompt = e; a2hs.style.display='flex'; });
+    a2hs.addEventListener('click', async ()=>{ if(!deferredPrompt) return; deferredPrompt.prompt(); const { outcome } = await deferredPrompt.userChoice; if(outcome){ a2hs.style.display='none'; } });
 </script>
 </body>
 </html>
