@@ -893,7 +893,15 @@ oiyee tolong nitip rawat moon baek yee lol, pastiin dia selamet, biar bisa lanju
     document.getElementById('celebrate').addEventListener('click', ()=>{ spawn(200); step(); navigator.vibrate?.(50); playConfettiSound();});
 
     // Auto confetti on first visit
-    window.addEventListener('load', ()=> setTimeout(()=>{ spawn(250); step(); playConfettiSound();}, 800));
+    let firstTriggered = false;
+    function firstConfettiWithSound() {
+        if (firstTriggered) return;
+        firstTriggered = true;
+        spawn(250); step(); playConfettiSound();
+    }
+
+document.addEventListener('pointerdown', firstConfettiWithSound, { once:true });
+document.addEventListener('keydown', firstConfettiWithSound, { once:true });
 
     // ====== Web Share API ======
     const shareBtn = document.getElementById('share');
