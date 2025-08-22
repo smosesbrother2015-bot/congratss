@@ -999,10 +999,10 @@ oiyee tolong nitip rawat moon baek yee lol, pastiin dia selamet, biar bisa lanju
                         });
                     } else {
                         // Fallback to download if share not supported
-                        downloadPostcard(blob);
+                        alert('Share Cancelled');
                     }
                 } catch (e) {
-                    downloadPostcard(blob);
+                    console.log('Share cancelled or failed:', e);
                 }
                 document.body.removeChild(optionsModal);
             });
