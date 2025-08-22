@@ -669,7 +669,7 @@ h1{
         gallery: [
             { src: "./resources/gedung.jpg", alt: "Naurah", msg: "RISSMMAAAA!!!!risma tidak pernah gagal bikin banggaa!!!selamatt sudah menamatkan segala lika liku keperawatan ini dengan sangatsangatsangat baikk🥹lollaa anak kecil yg tidak kecil lg xixixii, terimakasihh ya sudah jadi risma yg kuat, tangguh, keren, penghidup suasana dan selalu ceriaa. terus jadi risma yg kyk gitu yaahh walaupun hbs ini bakal capex di dunia kerja😭🤏🏼risma, perjalanan ners yg hampir 6 tahun apa udah 6 tahun ini pasti sangatt capek dan berat ya, jadiii HABISS INI TOLONG BGT HEALING DULU YA LOLA, JANGAN UJIAN TERUS???😔🙏🏻semogaa semua harapan dan tujuanmu segera diijabah yo lolll, jangan jauh jauh ya nanti cari rs nya🥲terakhir deh lol, katanya mau sebar undangan duluan kan?ditunggu yh xixixi🤭" },
             { src: "./resources/intun2.jpg", alt: "Uni", msg: "Gaperlu novel kan? Langsung aja ygy. I know you’ve got this, you know exactly what you want and need. Keep shining like you always do babe, you’re amazing! A diamond in the mud still sparkles, so gausa denial plis! Selamat uhuy 💕" },
-            { src: "/placeholder.svg?height=400&width=320", alt: "Tia", msg: "ini contoh klo bareng temen 📚✨" },
+            { src: "./resources/tia.jpg", alt: "Tia", msg: "congrats on ur ners, lol!!! makasii udah selalu berjuang since day 1 sampe akhirnya jadi ners🧚🏻‍♀✨ good luck in every journey yaaa always proud of u💗" },
             { src: "./resources/silfia.jpg", alt: "Silfia", msg: `Selamat lulus Ukom....
 Setelah 5 tahun berjuang, ini adalah hasil yang pantas didapatkan. Lembur askep dan begadang kini terbayar lunas. Aku tau gimana perjuangan muu, kamu luar biasa !!!
 
@@ -681,6 +681,13 @@ I got your back, Risma🌸` },
 Sahabat SMA ku yang sama-sama terakhir putus sama tali pusaarr.
 
 Selamat ya atas kelulusan ujiannyaa. Aku tidak pernah mengetahui bagaimana lika-liku, serta tantangan yang kamu hadapi semasa perkuliahan ini (Gak pernah cerita sih), But well, aku turut bangga ketika mendengar kabar baik seperti ini darimu. Jangan pernah berhenti semangat belajar. Kudoakan hal-hal baik dimudahkan datang ke dalam hidupmu. Aamiin.` },
+            { src: "./resources/manda.jpg", alt: "Manda", msg: `HAIII LOLL!!!🤗😘
+IH KEREN BGT KAMUUU UDAH MENYELESAIKAN INI SEMUAA❤‍🔥 anzay🤙🏻
+akhirnya selesai perjalanan bolak balik ke kepanjen ituh, bangga bangeeet akoo🥹🫰🏻
+kiww ibu perawat niiieee🤭
+selamat & semangaaatt yaa loll untuk menjalani step berikutnyaa iniih🔥🔥🔥
+semoga dimudahkan dan dilancarkan semuaa urusanmuu!! Mari kita ngonser Tulus/idgitaf lagiii (kalo ada waktu🙏🏻) 😁🤪 
+LOPP YEUWW🫶🏻🫶🏻🫶🏻` },
             { src: "./resources/fia.jpg", alt: "Fia", msg: `hey risma hafifa!!!
 selamat selamattt udah berhasil lewatin ukom keperawatannya, mungkin aku gatau banyak soal lika liku perjalanan ners mu lol, tapi aku gapernah ngeraguim dirimu sama sekali, we all know how great you are, kapan sih risma hafifa ngga keren, yaa nggaa?! 😎👊🏼
 
@@ -900,37 +907,11 @@ oiyee tolong nitip rawat moon baek yee lol, pastiin dia selamet, biar bisa lanju
         spawn(250); step(); playConfettiSound();
     }
 
-document.addEventListener('pointerdown', firstConfettiWithSound, { once:true });
-document.addEventListener('keydown', firstConfettiWithSound, { once:true });
+    document.addEventListener('pointerdown', firstConfettiWithSound, { once:true });
+    document.addEventListener('keydown', firstConfettiWithSound, { once:true });
 
     // ====== Web Share API ======
     const shareBtn = document.getElementById('share');
-    const LOVE_NOTES = [
-        "Proud of you — always 💙",
-        "Keep shining, nurse superstar ✨",
-        "One step closer to your dreams 🩺",
-        "You did it, and I'm so happy for you 💖",
-        "Semangat terus! Aku selalu dukung kamu 💪"
-    ];
-
-    // Quick floating hearts + haptic
-    function floatHearts(n=10){
-        const wrap = document.getElementById('float-hearts');
-        const emojis = ["💙","💖","💫","🩵","✨","💐"];
-        for(let i=0;i<n;i++){
-            const el = document.createElement('span');
-            el.className = 'heart-float';
-            el.textContent = emojis[(Math.random()*emojis.length)|0];
-            const x = 20 + Math.random()*60; // % horizontally
-            const delay = Math.random()*0.3;
-            el.style.left = x + 'vw';
-            el.style.animationDelay = delay + 's';
-            el.style.opacity = '0';
-            wrap.appendChild(el);
-            setTimeout(()=> el.remove(), 2500);
-        }
-      navigator.vibrate?.([80, 120, 80]); // heartbeat-ish
-    }
 
     // Draw a rounded rectangle helper
     function roundRect(ctx, x, y, w, h, r){
