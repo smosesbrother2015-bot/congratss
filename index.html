@@ -637,7 +637,7 @@ h1{
         <div class="dots" id="dots" role="tablist" aria-label="Slides"></div>
         <div style="text-align: center; margin-top: 20px;">
             <button class="btn secondary" id="backToCelebration" style="background: var(--gradient-soft); border: 2px solid var(--secondary); color: var(--secondary);">
-                ← Back to Celebration
+                ← Download Postcard
             </button>
         </div>
     </section>
@@ -776,95 +776,124 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
     // ====== Gallery rendering ======
     const track = document.getElementById('track');
     const dotsWrap = document.getElementById('dots');
-    let index = 0, startX = 0, currentX = 0, dragging = false, trackW = 0;
-
-    function renderSlides(){
-        track.innerHTML = DATA.gallery.map((g, i) => `
-        <div class="slide" role="group" aria-roledescription="slide">
-            <div class="photo-wrap">
-                <img src="${g.src}" alt="${g.alt || ''}">
-                <button class="enlarge-btn" onclick="openModal(${i})" aria-label="Enlarge image">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                        <path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/>
-                    </svg>
-                </button>
-                </div>
-            <p class="caption">${g.msg}</p>
-        </div>`).join('');
-        dotsWrap.innerHTML = DATA.gallery.map((_,i)=>`
-        <button class="dotbtn" role="tab" aria-label="Go to slide ${i+1}" ${i===0?'aria-current="true"':''}></button>`).join('');
-        trackW = track.getBoundingClientRect().width;
-        goTo(0, false);
-    }
-
-    function goTo(i, animate=true){
-        if (i < 0) {
-            index = DATA.gallery.length - 1; // Go to last image when swiping left from first
-        } else if (i >= DATA.gallery.length) {
-            index = 0; // Go to first image when swiping right from last
-        } else {
-            index = i;
-        }
-        track.style.transition = animate ? 'transform .35s ease' : 'none';
-        track.style.transform = `translateX(${-index * 100}%)`;
-        dotsWrap.querySelectorAll('.dotbtn').forEach((d,di)=> d.setAttribute('aria-current', di===index ? 'true':'false'));
-    }
-
-    // Dots
-    dotsWrap.addEventListener('click', (e)=>{
-        if(e.target.matches('.dotbtn')){
-        const nodes = Array.from(dotsWrap.children);
-        goTo(nodes.indexOf(e.target));
-        }
-    });
-
-    const carousel = document.getElementById('carousel');
+    let index = 1;            // start at 1 because of the leading clone
+    let dragging = false, startX = 0, currentX = 0;
     const threshold = 50;
 
-    carousel.addEventListener('touchstart', (e)=>{
-        if(e.touches.length !== 1) return;
-        
-        // Check if touch started on a caption element
-        const target = e.target.closest('.caption');
-        if(target) {
-            // If touching caption, don't interfere with scrolling
-            return;
-        }
-        
-        dragging = true; 
-        startX = e.touches[0].clientX; 
-        currentX = startX;
-        track.style.transition = 'none';
-    }, {passive:true});
+  function renderSlides(){
+    // build slides + clones
+    const first = DATA.gallery[0];
+    const last  = DATA.gallery[DATA.gallery.length - 1];
 
-    carousel.addEventListener('touchmove', (e)=>{
-        if(!dragging) return;
-        
-        // Check if we're scrolling within a caption
-        const target = e.target.closest('.caption');
-        if(target) {
-            // Allow native scrolling within caption
-            return;
-        }
-        
-        currentX = e.touches[0].clientX;
-        const dx = currentX - startX;
-        const pct = (dx / carousel.clientWidth) * 100;
-        track.style.transform = `translateX(${-(index*100) + pct}%)`;
-    }, {passive:true});
+    const core = DATA.gallery.map((g, i) => `
+      <div class="slide" role="group" aria-roledescription="slide">
+        <div class="photo-wrap">
+          <img src="${g.src}" alt="${g.alt || ''}">
+          <button class="enlarge-btn" onclick="openModal(${i})" aria-label="Enlarge image">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+              <path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/>
+            </svg>
+          </button>
+        </div>
+        <p class="caption">${g.msg}</p>
+      </div>`).join('');
 
-    carousel.addEventListener('touchend', (e)=>{
-        if(!dragging) return; 
-        dragging = false;
-        
-        const dx = currentX - startX;
-        if(Math.abs(dx) > threshold){
-            if(dx < 0) goTo(index + 1); else goTo(index - 1);
-        }else{
-            goTo(index);
-        }
-    }, {passive:true});
+    const firstClone = `
+      <div class="slide" data-clone="first">
+        <div class="photo-wrap"><img src="${first.src}" alt="${first.alt || ''}"></div>
+        <p class="caption">${first.msg}</p>
+      </div>`;
+    const lastClone = `
+      <div class="slide" data-clone="last">
+        <div class="photo-wrap"><img src="${last.src}" alt="${last.alt || ''}"></div>
+        <p class="caption">${last.msg}</p>
+      </div>`;
+
+    track.innerHTML = lastClone + core + firstClone;
+
+    // dots for real slides only
+    dotsWrap.innerHTML = DATA.gallery.map((_,i)=>`
+      <button class="dotbtn" role="tab" aria-label="Go to slide ${i+1}"></button>`).join('');
+
+    // start positioned at the first real slide (index 1)
+    track.style.transition = 'none';
+    track.style.transform = `translateX(${-index * 100}%)`;
+    requestAnimationFrame(()=>{
+      track.style.transition = ''; // re-enable after initial snap
+      updateDots();
+    });
+  }
+
+  function updateDots(){
+    const activeReal = ((index - 1 + DATA.gallery.length) % DATA.gallery.length);
+    dotsWrap.querySelectorAll('.dotbtn').forEach((d,di)=> d.setAttribute('aria-current', di===activeReal ? 'true':'false'));
+  }
+
+  function goTo(i, animate = true){
+    index = i;
+    track.style.transition = animate ? 'transform .35s ease' : 'none';
+    track.style.transform = `translateX(${-index * 100}%)`;
+    updateDots();
+  }
+
+  // Seamless wrap after the animation ends
+  track.addEventListener('transitionend', ()=>{
+    const slidesCountWithClones = DATA.gallery.length + 2;
+    if (index === slidesCountWithClones - 1) {
+      // moved to the trailing clone of the first → snap back to real first (1)
+      track.style.transition = 'none';
+      index = 1;
+      track.style.transform = `translateX(${-index * 100}%)`;
+      requestAnimationFrame(()=> track.style.transition = '');
+    } else if (index === 0) {
+      // moved to the leading clone of the last → snap to real last (length)
+      track.style.transition = 'none';
+      index = DATA.gallery.length;
+      track.style.transform = `translateX(${-index * 100}%)`;
+      requestAnimationFrame(()=> track.style.transition = '');
+    }
+    updateDots();
+  });
+
+  // dot navigation
+  dotsWrap.addEventListener('click', (e)=>{
+    if(!e.target.matches('.dotbtn')) return;
+    const targetIdx = Array.from(dotsWrap.children).indexOf(e.target);
+    goTo(targetIdx + 1); // +1 to account for leading clone
+  });
+
+  // touch handlers (unchanged logic, but use new indices)
+  carousel.addEventListener('touchstart', (e)=>{
+    if(e.touches.length !== 1) return;
+    if (e.target.closest('.caption')) return;
+    dragging = true;
+    startX = e.touches[0].clientX; 
+    currentX = startX;
+    track.style.transition = 'none';
+  }, {passive:true});
+
+  carousel.addEventListener('touchmove', (e)=>{
+    if(!dragging) return;
+    if (e.target.closest('.caption')) return;
+    currentX = e.touches[0].clientX;
+    const dx = currentX - startX;
+    const pct = (dx / carousel.clientWidth) * 100;
+    track.style.transform = `translateX(${-(index*100) + pct}%)`;
+  }, {passive:true});
+
+  carousel.addEventListener('touchend', ()=>{
+    if(!dragging) return;
+    dragging = false;
+    const dx = currentX - startX;
+    const slidesCountWithClones = DATA.gallery.length + 2;
+    if (Math.abs(dx) > threshold){
+      if (dx < 0) goTo(Math.min(index + 1, slidesCountWithClones - 1));
+      else        goTo(Math.max(index - 1, 0));
+    } else {
+      goTo(index);
+    }
+  }, {passive:true});
 
     document.addEventListener('DOMContentLoaded', () => {
         // Add event listeners to caption elements to stop propagation
@@ -887,7 +916,7 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
 
     // Initialize gallery
     renderSlides();
-    addEventListener('resize', ()=> { trackW = track.getBoundingClientRect().width; goTo(index,false); }, {passive:true});
+    addEventListener('resize', ()=> { goTo(index, false); }, {passive:true});
 
     // ====== Enhanced Confetti ======
     const canvas = document.getElementById('fx');
