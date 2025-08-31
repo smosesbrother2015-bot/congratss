@@ -776,14 +776,15 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
     // ====== Gallery rendering ======
     const track = document.getElementById('track');
     const dotsWrap = document.getElementById('dots');
-    let index = 0, startX = 0, currentX = 0, dragging = false, trackW = 0;
+    let index = 1, startX = 0, currentX = 0, dragging = false, trackW = 0; // start at 1 because of leading clone
+    const N = DATA.gallery.length;
 
     function renderSlides(){
-        track.innerHTML = DATA.gallery.map((g, i) => `
+        const slideTpl = (g, realIndex) =>`
         <div class="slide" role="group" aria-roledescription="slide">
             <div class="photo-wrap">
                 <img src="${g.src}" alt="${g.alt || ''}">
-                <button class="enlarge-btn" onclick="openModal(${i})" aria-label="Enlarge image">
+                <button class="enlarge-btn" onclick="openModal(${realIndex})" aria-label="Enlarge image">
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
                         <path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/>
@@ -791,31 +792,36 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
                 </button>
                 </div>
             <p class="caption">${g.msg}</p>
-        </div>`).join('');
+        </div>`;
+
+        const first = DATA.gallery[0], last = DATA.gallery[N-1];
+        track.innerHTML = [
+            slideTpl(last, N-1),
+            ...DATA.gallery.map((g, i) => slideTpl(g, i)),
+            slideTpl(first, 0),
+        ].join('');
+
         dotsWrap.innerHTML = DATA.gallery.map((_,i)=>`
         <button class="dotbtn" role="tab" aria-label="Go to slide ${i+1}" ${i===0?'aria-current="true"':''}></button>`).join('');
         trackW = track.getBoundingClientRect().width;
-        goTo(0, false);
+        goTo(1, false);
     }
 
     function goTo(i, animate=true){
-        if (i < 0) {
-            index = DATA.gallery.length - 1; // Go to last image when swiping left from first
-        } else if (i >= DATA.gallery.length) {
-            index = 0; // Go to first image when swiping right from last
-        } else {
-            index = i;
-        }
+        index = i;
         track.style.transition = animate ? 'transform .35s ease' : 'none';
         track.style.transform = `translateX(${-index * 100}%)`;
-        dotsWrap.querySelectorAll('.dotbtn').forEach((d,di)=> d.setAttribute('aria-current', di===index ? 'true':'false'));
+
+        const real = (index - 1 + N) % N;
+        dotsWrap.querySelectorAll('.dotbtn').forEach((d,di)=> d.setAttribute('aria-current', di===real ? 'true':'false'));
     }
 
     // Dots
     dotsWrap.addEventListener('click', (e)=>{
         if(e.target.matches('.dotbtn')){
         const nodes = Array.from(dotsWrap.children);
-        goTo(nodes.indexOf(e.target));
+        const realIdx = nodes.indexOf(e.target);
+        goTo(realIdx + 1);
         }
     });
 
@@ -865,6 +871,19 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
             goTo(index);
         }
     }, {passive:true});
+
+    track.addEventListener('transitionend', () => {
+        if (index === 0) {
+            track.style.transition = 'none';
+            index = N; // real last
+            track.style.transform = `translateX(${-index * 100}%)`;
+        }
+        else if (index === N + 1){
+            track.style.transition = 'none';
+            index = 1; // real first
+            track.style.transform = `translateX(${-index * 100}%)`;
+        }
+    })
 
     document.addEventListener('DOMContentLoaded', () => {
         // Add event listeners to caption elements to stop propagation
@@ -1005,7 +1024,8 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
 
     async function makePostcard(){
         floatHearts();
-        const current = (DATA.gallery && DATA.gallery[index]) || DATA.gallery?.[0] || null;
+        const real = (index - 1 + N) % N;
+        const current = DATA.gallery[real] || null;
         const note = LOVE_NOTES[(Math.random()*LOVE_NOTES.length)|0];
         const canvas = await createPostcardCanvas(current, note);
 
