@@ -565,7 +565,7 @@ h1{
     .cta {
         flex-direction: column;
     }
-    
+
     .btn {
         width: 100%;
         text-align: center;
@@ -575,7 +575,7 @@ h1{
         max-width: 95vw;
         max-height: 95vh;
     }
-    
+
     .modal-image {
         max-height: calc(95vh - 100px);
     }
@@ -824,14 +824,14 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
 
     carousel.addEventListener('touchstart', (e)=>{
         if(e.touches.length !== 1) return;
-        
+
         // Check if touch started on a caption element
         const target = e.target.closest('.caption');
         if(target) {
             // If touching caption, don't interfere with scrolling
             return;
         }
-        
+
         dragging = true; 
         startX = e.touches[0].clientX; 
         currentX = startX;
@@ -840,14 +840,14 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
 
     carousel.addEventListener('touchmove', (e)=>{
         if(!dragging) return;
-        
+
         // Check if we're scrolling within a caption
         const target = e.target.closest('.caption');
         if(target) {
             // Allow native scrolling within caption
             return;
         }
-        
+
         currentX = e.touches[0].clientX;
         const dx = currentX - startX;
         const pct = (dx / carousel.clientWidth) * 100;
@@ -857,7 +857,7 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
     carousel.addEventListener('touchend', (e)=>{
         if(!dragging) return; 
         dragging = false;
-        
+
         const dx = currentX - startX;
         if(Math.abs(dx) > threshold){
             if(dx < 0) goTo(index + 1); else goTo(index - 1);
@@ -871,7 +871,7 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
         const handleCaptionTouch = (e) => {
             e.stopPropagation();
         };
-        
+
         // Apply to existing captions and future ones
         const observer = new MutationObserver(() => {
             document.querySelectorAll('.caption').forEach(caption => {
@@ -881,7 +881,7 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
                 caption.addEventListener('touchmove', handleCaptionTouch, {passive: true});
             });
         });
-        
+
         observer.observe(document.body, { childList: true, subtree: true });
     });
 
@@ -922,7 +922,7 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
             b.x += b.vx; b.y += b.vy; b.r += b.vr; b.vy += .06*devicePixelRatio;
             ctx.save(); ctx.translate(b.x,b.y); ctx.rotate(b.r);
             ctx.fillStyle = b.c;
-            
+
             if(b.shape === 'heart') {
                 // Draw heart shape
                 const size = b.s * 0.5;
@@ -934,7 +934,7 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
             } else {
                 ctx.fillRect(-b.s*.5,-b.s*.3,b.s,b.s*.6);
             }
-            
+
             ctx.restore();
             if(b.y > H + 50*devicePixelRatio) bits.splice(i,1);
         }
@@ -1008,11 +1008,11 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
         const current = (DATA.gallery && DATA.gallery[index]) || DATA.gallery?.[0] || null;
         const note = LOVE_NOTES[(Math.random()*LOVE_NOTES.length)|0];
         const canvas = await createPostcardCanvas(current, note);
-        
+
         canvas.toBlob(async (blob) => {
             if (!blob) return;
             const file = new File([blob], `for-${DATA.name}.jpg`, { type: 'image/jpeg' });
-            
+
             // Show options modal
             const optionsHtml = `
                 <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;">
@@ -1026,15 +1026,15 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
                     </div>
                 </div>
             `;
-            
+
             const optionsModal = document.createElement('div');
             optionsModal.innerHTML = optionsHtml;
             document.body.appendChild(optionsModal);
-            
+
             const shareOption = optionsModal.querySelector('#shareOption');
             const downloadOption = optionsModal.querySelector('#downloadOption');
             const cancelOption = optionsModal.querySelector('#cancelOption');
-            
+
             shareOption.addEventListener('click', async () => {
                 try {
                     if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -1052,12 +1052,12 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
                 }
                 document.body.removeChild(optionsModal);
             });
-            
+
             downloadOption.addEventListener('click', () => {
                 downloadPostcard(blob);
                 document.body.removeChild(optionsModal);
             });
-            
+
             cancelOption.addEventListener('click', () => {
                 document.body.removeChild(optionsModal);
             });
@@ -1133,7 +1133,7 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
             });
         }
         ctx.restore();
-        
+
         ctx.fillStyle = '#64748b';
         ctx.font = '500 36px "DM Sans", system-ui';
         ctx.textAlign = 'center';
@@ -1148,7 +1148,7 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
         ctx.fill();
         ctx.fillStyle = '#64748b';
         ctx.fillText(footerText, W/2, H - pad - 16);
-        
+
         return canvas;
     }
 
