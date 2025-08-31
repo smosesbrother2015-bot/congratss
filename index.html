@@ -674,16 +674,16 @@ h1{
         gallery: [
             { src: "./resources/gedung.jpg", alt: "Naurah", msg: `RISSMMAAAA!!!!risma tidak pernah gagal bikin banggaa!!!selamatt sudah menamatkan segala lika liku keperawatan ini dengan sangatsangatsangat baikk🥹lollaa anak kecil yg tidak kecil lg xixixii, terimakasihh ya sudah jadi risma yg kuat, tangguh, keren, penghidup suasana dan selalu ceriaa. terus jadi risma yg kyk gitu yaahh walaupun hbs ini bakal capex di dunia kerja😭🤏🏼risma, perjalanan ners yg hampir 6 tahun apa udah 6 tahun ini pasti sangatt capek dan berat ya, jadiii HABISS INI TOLONG BGT HEALING DULU YA LOLA, JANGAN UJIAN TERUS???😔🙏🏻semogaa semua harapan dan tujuanmu segera diijabah yo lolll, jangan jauh jauh ya nanti cari rs nya🥲terakhir deh lol, katanya mau sebar undangan duluan kan?ditunggu yh xixixi🤭
             
-            -Naurah` },
+-Naurah` },
             { src: "./resources/intun2.jpg", alt: "Uni", msg: `Gaperlu novel kan? Langsung aja ygy. I know you’ve got this, you know exactly what you want and need. Keep shining like you always do babe, you’re amazing! A diamond in the mud still sparkles, so gausa denial plis! Selamat uhuy 💕
             
-            -Uni` },
+-Uni` },
             { src: "./resources/tia.jpg", alt: "Tia", msg: `congrats on ur ners, lol!!! makasii udah selalu berjuang since day 1 sampe akhirnya jadi ners🧚🏻‍♀✨ good luck in every journey yaaa always proud of u💗
             
-            -Tia` },
+-Tia` },
             { src: "./resources/depin.jpg", alt: "Depin", msg: `Selamattt kompetenn rismaaa, semoga ilmunyaaa bermanfaatt, selamatt menghadapiii kehidupann perawat yang sebenernyaaa🫶🏻🫶🏻🫶🏻
             
-            -Depin` },
+-Depin` },
             { src: "./resources/aiko.jpg", alt: "Aiko", msg: `HAY RISMAAA, congratsss sudah menyelesaikan UKOM dengan sangat baik. I know since day one u're such a hardworking gurl. Semoga dilancarkan step step selanjutnya dalam hidup. Maybe we're not talk to much but just know that i'll support u no matter what path u choose. And forever gratefull being ure friends. ANWY km blom crrita2 lo love storymu ke akuh 🧐🧐🧐🧐. Ayo mainnnn kita cerita2 lagiii 🥺🥺🥺.
 
 -Aiko_kawaii` },
@@ -799,7 +799,13 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
     }
 
     function goTo(i, animate=true){
-        index = Math.max(0, Math.min(i, DATA.gallery.length - 1));
+        if (i < 0) {
+            index = DATA.gallery.length - 1; // Go to last image when swiping left from first
+        } else if (i >= DATA.gallery.length) {
+            index = 0; // Go to first image when swiping right from last
+        } else {
+            index = i;
+        }
         track.style.transition = animate ? 'transform .35s ease' : 'none';
         track.style.transform = `translateX(${-index * 100}%)`;
         dotsWrap.querySelectorAll('.dotbtn').forEach((d,di)=> d.setAttribute('aria-current', di===index ? 'true':'false'));
