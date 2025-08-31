@@ -312,6 +312,7 @@ h1{
     background: var(--gradient-soft);
     border:2px solid rgba(14, 165, 233, 0.1); 
     box-shadow: var(--shadow);
+    contain: layout paint;
 }
 
 .track{
@@ -320,6 +321,8 @@ h1{
     touch-action:pan-y;
     transition:transform .35s ease;
     will-change: transform;
+    backface-visibility: hidden;
+    contain: layout paint;
 }
 
 .slide{
@@ -331,6 +334,7 @@ h1{
     /* Fixed height to prevent long captions from affecting other slides */
     height: 600px;
     position: relative;
+    backface-visibility: hidden;
 }
 
 .photo-wrap{
@@ -369,6 +373,7 @@ h1{
     overflow-y: auto;
     max-height: 200px;
     white-space: pre-wrap;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Enhanced dots navigation */
@@ -781,6 +786,15 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
     let dragging = false, startX = 0, currentX = 0;
     const threshold = 50;
 
+    function preloadNeighbors(i){
+        const realCount = DATA.gallery.length;
+        const realIndex = ((i - 1 + realCount) % realCount); 
+        [realIndex, (realIndex+1)%realCount, (realIndex-1+realCount)%realCount].forEach(idx=>{
+        const img = new Image();
+        img.src = DATA.gallery[idx].src;
+    });
+}
+
   function renderSlides(){
     // build slides + clones
     const first = DATA.gallery[0];
@@ -819,10 +833,11 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
 
     // start positioned at the first real slide (index 1)
     track.style.transition = 'none';
-    track.style.transform = `translateX(${-index * 100}%)`;
+    track.style.transform = `translate3d(${-index * 100}%,0,0)`;
     requestAnimationFrame(()=>{
       track.style.transition = ''; // re-enable after initial snap
       updateDots();
+      preloadNeighbors(index);
     });
   }
 
@@ -834,8 +849,9 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
   function goTo(i, animate = true){
     index = i;
     track.style.transition = animate ? 'transform .35s ease' : 'none';
-    track.style.transform = `translateX(${-index * 100}%)`;
+    track.style.transform = `translate3d(${-index * 100}%,0,0)`;
     updateDots();
+    preloadNeighbors(index);
   }
 
   // Seamless wrap after the animation ends
@@ -845,13 +861,13 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
       // moved to the trailing clone of the first → snap back to real first (1)
       track.style.transition = 'none';
       index = 1;
-      track.style.transform = `translateX(${-index * 100}%)`;
+      track.style.transform = `translate3d(${-index * 100}%,0,0)`;
       requestAnimationFrame(()=> track.style.transition = '');
     } else if (index === 0) {
       // moved to the leading clone of the last → snap to real last (length)
       track.style.transition = 'none';
       index = DATA.gallery.length;
-      track.style.transform = `translateX(${-index * 100}%)`;
+      track.style.transform = `translate3d(${-index * 100}%,0,0)`;
       requestAnimationFrame(()=> track.style.transition = '');
     }
     updateDots();
@@ -880,7 +896,7 @@ selamat sudah sukses ukom!! selamat bersenang - senanggg dan lanjut studi dan ka
     currentX = e.touches[0].clientX;
     const dx = currentX - startX;
     const pct = (dx / carousel.clientWidth) * 100;
-    track.style.transform = `translateX(${-(index*100) + pct}%)`;
+    track.style.transform = `translate3d(${-(index*100) + pct}%,0,0)`;
   }, {passive:true});
 
   carousel.addEventListener('touchend', ()=>{
